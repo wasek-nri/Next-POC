@@ -16,17 +16,17 @@ const Header: React.FC = () => {
       <Toolbar>
         {/* Use Typography for menu items and add spacing */}
         <Link href="/" passHref>
-          <Typography variant="h6" sx={{cursor: 'pointer', marginRight: 2 }}>
+          <Typography sx={{cursor: 'pointer', marginRight: 2 }}>
             Home
           </Typography>
         </Link>
         <Link href="/inventory" passHref>
-          <Typography variant="h6" sx={{cursor: 'pointer', marginRight: 2 }}>
+          <Typography sx={{cursor: 'pointer', marginRight: 2 }}>
             Inventory
           </Typography>
         </Link>
         <Link href="/operations" passHref>
-          <Typography variant="h6"  sx={{ cursor: 'pointer' }}>
+          <Typography sx={{ cursor: 'pointer' }}>
             Operations
           </Typography>
         </Link>
