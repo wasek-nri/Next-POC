@@ -3,27 +3,39 @@
 import AppBar from '@mui/material/AppBar';
 import Switch from '@mui/material/Switch';
 import Toolbar from '@mui/material/Toolbar';
-import React, { useState } from 'react';
+import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import React from 'react';
 import { useThemeContext } from "../mui/MuiThemeProvider.client";
 
 const Header: React.FC = () => {
   const { toggleTheme } = useThemeContext();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <AppBar position="static">
       <Toolbar>
-        {/* other components */}
-        <Switch onChange={toggleTheme} edge="end" />
+        {/* Use Typography for menu items and add spacing */}
+        <Link href="/" passHref>
+          <Typography variant="h6" sx={{cursor: 'pointer', marginRight: 2 }}>
+            Home
+          </Typography>
+        </Link>
+        <Link href="/inventory" passHref>
+          <Typography variant="h6" sx={{cursor: 'pointer', marginRight: 2 }}>
+            Inventory
+          </Typography>
+        </Link>
+        <Link href="/operations" passHref>
+          <Typography variant="h6"  sx={{ cursor: 'pointer' }}>
+            Operations
+          </Typography>
+        </Link>
+        {/* Theme Toggle Switch, aligned to the right */}
+        <Switch
+          onChange={toggleTheme}
+          edge="end"
+          sx={{ marginLeft: 'auto' }}  // This pushes the switch to the far right
+        />
       </Toolbar>
     </AppBar>
   );
