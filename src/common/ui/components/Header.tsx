@@ -20,7 +20,7 @@ const Header: React.FC = () => {
             Home
           </Typography>
         </Link>
-        <Link href="/inventory" passHref>
+        <Link href="/inventory/items" passHref>
           <Typography sx={{cursor: 'pointer', marginRight: 2 }}>
             Inventory
           </Typography>
