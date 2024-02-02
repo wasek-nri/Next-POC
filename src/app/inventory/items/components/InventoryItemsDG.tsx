@@ -16,28 +16,28 @@ export const columns: InventoryItemsDGProps['columns'] = [
   {
     field: 'Description',
     headerName: 'Description',
-    width: 200,
+    flex: 1,
     sortable: true,
     filterable: true,
   },
   {
     field: 'ItemNumber',
     headerName: 'Item Number',
-    width: 150,
+    flex: 1,
     sortable: true,
     filterable: true,
   },
   {
     field: 'ItemType',
     headerName: 'Item Type',
-    width: 120,
+    flex: 1,
     sortable: true,
     filterable: true,
   },
   {
     field: 'StyleDescription',
     headerName: 'Style Description',
-    width: 180,
+    flex: 1,
     sortable: true,
     filterable: true,
   },
@@ -53,6 +53,7 @@ const InventoryItemsDG: React.FC<InventoryItemsDGProps> = ({
       rows={rows}
       columns={columns}
       pageSizeOptions={[50, 100]}
+      getRowId={(row) => row.ItemID}
       //   rowsPerPageOptions={[50]}
       // Include other DataGrid props as needed
     />
