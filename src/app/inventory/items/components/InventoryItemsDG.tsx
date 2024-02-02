@@ -57,7 +57,6 @@ const InventoryItemsDG: React.FC<InventoryItemsDGProps> = ({
     <DataGridPremium
       rows={rows}
       columns={columns}
-      pageSizeOptions={[50, 100]}
       getRowId={(row) => row.ItemID}
       {...otherProps} // Spread the rest of the props here
     />
