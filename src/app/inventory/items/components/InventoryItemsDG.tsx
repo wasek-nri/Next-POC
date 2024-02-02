@@ -1,14 +1,18 @@
 'use client';
-import { DataGridPremium } from '@mui/x-data-grid-premium';
-import * as React from 'react';
 import {
-  InventoryItem,
-  InventoryItemsColumns,
-} from '../interfaces/inventoryItems';
+  DataGridPremium,
+  DataGridPremiumProps,
+} from '@mui/x-data-grid-premium';
+import * as React from 'react';
+import { InventoryItem } from '../interfaces/inventoryItems';
 
-interface InventoryItemsDGProps {
+// interface InventoryItemsDGProps {
+//   rows: InventoryItem[];
+//   columns: InventoryItemsColumns;
+// }
+interface InventoryItemsDGProps extends DataGridPremiumProps<InventoryItem> {
   rows: InventoryItem[];
-  columns: InventoryItemsColumns;
+  columns: DataGridPremiumProps<InventoryItem>['columns'];
 }
 
 // Define columns for the DataGrid
@@ -47,6 +51,7 @@ export const columns: InventoryItemsDGProps['columns'] = [
 const InventoryItemsDG: React.FC<InventoryItemsDGProps> = ({
   rows,
   columns,
+  ...otherProps // Capture the rest of the props
 }) => {
   return (
     <DataGridPremium
@@ -54,8 +59,7 @@ const InventoryItemsDG: React.FC<InventoryItemsDGProps> = ({
       columns={columns}
       pageSizeOptions={[50, 100]}
       getRowId={(row) => row.ItemID}
-      //   rowsPerPageOptions={[50]}
-      // Include other DataGrid props as needed
+      {...otherProps} // Spread the rest of the props here
     />
   );
 };
