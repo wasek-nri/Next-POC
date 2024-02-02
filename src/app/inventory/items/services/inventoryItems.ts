@@ -30,7 +30,7 @@ const nriAxios = axios.create({
     'Accept-Language': 'en-US,en;q=0.9',
     'CompanyID': '1',
     'Connection': 'keep-alive',
-    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDY4NDQ5ODMsImV4cCI6MTcwNjg4MDk4M30.lpzAAHS2epMgueyghVIpXzG9aIsrhqFDoLymJbpTtmU',
+    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDY5MDY5OTcsImV4cCI6MTcwNjk0Mjk5N30.enZs3m009AD_IxXCuB5rrjtTzaXc0eMTwEjiOKWXkz8',
     'Origin': 'http://localhost:3001',
     'Referer': 'http://localhost:3001/',
     // Not typically necessary to set these headers manually in a browser environment

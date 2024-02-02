@@ -1,180 +1,85 @@
-// 'use client';
-// import React, { useEffect, useState } from 'react';
-// import useSWR from 'swr';
-// import InventoryItemsDG, { columns } from './components/InventoryItemsDG';
-// import { fetchInventoryItems } from './services/inventoryItems';
-
-// const InventoryItemsPage: React.FC = () => {
-//   //   const [page, setPage] = useState(1);
-//   //   const [pageSize, setPageSize] = useState(50);
-
-//   //   //   const { data, error } = useSWR(
-//   //   //     'inventory-items', // This is the cache key for SWR
-//   //   //     () => fetchInventoryItems({ page: 1, pageSize: 50, clientCode: '2XU' }) // Your fetch function
-//   //   //   );
-//   //   const { data, error, mutate } = useSWR(
-//   //     [
-//   //       `/inventory/items?page=${page}&pageSize=${pageSize}&clientCode=2XU`,
-//   //       page,
-//   //       pageSize,
-//   //     ],
-//   //     () => fetchInventoryItems({ page, pageSize, clientCode: '2XU' })
-//   //   );
-
-//   const [paginationModel, setPaginationModel] = useState({
-//     page: 0,
-//     pageSize: 50,
-//   });
-
-//   const { data, error } = useSWR(
-//     `/inventory/items?page=${paginationModel.page + 1}&pageSize=${
-//       paginationModel.pageSize
-//     }&clientCode=2XU`,
-//     () =>
-//       fetchInventoryItems({
-//         page: paginationModel.page + 1,
-//         pageSize: paginationModel.pageSize,
-//         clientCode: '2XU',
-//       })
-//   );
-
-//   const [rowCountState, setRowCountState] = useState(data?.Count || 0);
-
-//   useEffect(() => {
-//     if (data?.Count !== undefined) {
-//       setRowCountState(data.Count);
-//     }
-//   }, [data?.Count]);
-
-//   // Update the pagination state and refetch data
-//   //   const handlePageChange = (newPage: number) => {
-//   //     setPage(newPage);
-//   //     mutate();
-//   //   };
-
-//   //   const handlePageSizeChange = (newPageSize: number) => {
-//   //     setPageSize(newPageSize);
-//   //     mutate();
-//   //   };
-
-//   if (error) return <div>Error loading data.</div>;
-//   if (!data) return <div>Loading...</div>;
-
-//   return (
-//     <div>
-//       <h1>Inventory Items</h1>
-//       {/* <InventoryItemsDG rows={data.Items} columns={columns}  /> */}
-//       <InventoryItemsDG
-//         rows={data.Items || []}
-//         columns={columns}
-//         rowCount={rowCountState}
-//         loading={!data && !error} // Show loading overlay in the DataGrid when data is not available yet
-//         pageSizeOptions={[25, 50, 100]}
-//         paginationModel={paginationModel}
-//         paginationMode="server"
-//         onPaginationModelChange={(model) => setPaginationModel(model)}
-//         pagination
-//       />
-//     </div>
-//   );
-// };
-
-// export default InventoryItemsPage;
-
 'use client';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import InventoryItemsDG, { columns } from './components/InventoryItemsDG';
-import { InventoryItem } from './interfaces/inventoryItems';
+import {
+  InventoryItem,
+  InventoryItemsResponse,
+} from './interfaces/inventoryItems';
 import { fetchInventoryItems } from './services/inventoryItems';
 
 const INITIAL_PAGE_SIZE = 50;
 
 const InventoryItemsPage: React.FC = () => {
+  // State for pagination
   const [paginationModel, setPaginationModel] = useState({
     page: 1,
     pageSize: INITIAL_PAGE_SIZE,
   });
-  const [loading, setLoading] = useState(false);
-  const [rows, setRows] = useState<InventoryItem[]>([]);
-  const [rowCount, setRowCount] = useState(0);
 
-  // Use SWR for the initial data load
-  const { data, error } = useSWR(
-    `/inventory/items?page=1&pageSize=50&clientCode=2XU`,
-    () => fetchInventoryItems({ page: 1, pageSize: 50, clientCode: '2XU' })
+  // State to track initial loading
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  // State for row count, managing it to keep consistent pagination
+  const [rowCountState, setRowCountState] = useState<number | undefined>(
+    undefined
   );
 
-  // Load data directly for pagination changes, bypassing SWR after the initial load
-  //   const loadData = useCallback(async () => {
-  //     setLoading(true);
-  //     const response = await fetchInventoryItems({
-  //       page: paginationModel.page,
-  //       pageSize: paginationModel.pageSize,
-  //       clientCode: '2XU',
-  //     });
-  //     setRows(response.Items);
-  //     setRowCount(response.Count);
-  //     setLoading(false);
-  //   }, [paginationModel.page, paginationModel.pageSize]);
+  // State for managing rows; keeps previous data visible until new data loads
+  const [rows, setRows] = useState<InventoryItem[]>([]);
 
-  // Effect to load data on pagination model change
-  //   useEffect(() => {
-  //     console.log('paginationModel', paginationModel);
-  //     if (
-  //       paginationModel.page > 1 &&
-  //       paginationModel.pageSize > INITIAL_PAGE_SIZE
-  //     ) {
-  //       // Avoid initial load via SWR
-  //       loadData();
-  //     }
-  //   }, [
-  //     paginationModel.page,
-  //     paginationModel.pageSize,
-  //     loadData,
-  //     paginationModel,
-  //   ]);
-  useEffect(() => {
-    console.log('paginationModel', paginationModel);
-    const fetchData = async () => {
-      // Adjusted condition based on your logic
-      setLoading(true);
-      const response = await fetchInventoryItems({
+  // Use SWR for data fetching
+  const { data, error } = useSWR<InventoryItemsResponse>(
+    [`/inventory/items`, paginationModel.page, paginationModel.pageSize],
+    () =>
+      fetchInventoryItems({
         page: paginationModel.page,
         pageSize: paginationModel.pageSize,
         clientCode: '2XU',
-      });
-      setRows(response.Items);
-      setRowCount(response.Count);
-      setLoading(false);
-    };
+      })
+  );
 
-    fetchData();
-  }, [paginationModel]); // Removed unnecessary dependencies
-
-  // Initialize rows and rowCount from SWR data on first load
+  // Effect to handle data loading and error handling
   useEffect(() => {
-    if (data && data.Items && data.Count) {
+    if (data) {
+      // Update rows only when data is successfully fetched
       setRows(data.Items);
-      setRowCount(data.Count);
+      setRowCountState(data.Count);
+      setIsInitialLoading(false);
+    } else if (error) {
+      setIsInitialLoading(false);
+      // Handle error state appropriately (e.g., show an error message)
     }
-  }, [data]);
+  }, [data, error]);
 
-  if (error) return <div>Error loading data.</div>;
-  if (!data && !loading) return <div>Loading...</div>;
+  // Display a loading indicator or skeleton on initial load
+  if (isInitialLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Determine if data is currently loading (after initial load)
+  const isLoading = !data && !error;
 
   return (
     <div>
       <h1>Inventory Items</h1>
       <InventoryItemsDG
-        rows={rows}
+        rows={rows} // Use stateful rows to keep previous data visible
         columns={columns}
-        rowCount={rowCount}
-        loading={loading}
+        rowCount={rowCountState}
+        loading={isLoading} // Shows spinner on top of existing rows
         pageSizeOptions={[5, 20, 50]}
-        paginationModel={paginationModel}
+        paginationModel={{
+          page: paginationModel.page - 1,
+          pageSize: paginationModel.pageSize,
+        }}
         paginationMode="server"
-        onPaginationModelChange={setPaginationModel}
+        onPaginationModelChange={(newModel) => {
+          setPaginationModel({
+            page: newModel.page + 1,
+            pageSize: newModel.pageSize,
+          });
+        }}
         pagination
       />
     </div>
