@@ -1,4 +1,5 @@
 'use client';
+import { Box, Skeleton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useSWR, { mutate } from 'swr';
 import InventoryItemsDG, { columns } from './components/InventoryItemsDG';
@@ -7,6 +8,35 @@ import {
   InventoryItemsResponse,
 } from './interfaces/inventoryItems';
 import { fetchInventoryItems } from './services/inventoryItems';
+
+function CustomLoadingOverlay() {
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      {Array.from(new Array(3)).map((_, index) => (
+        <Skeleton
+          key={index}
+          variant="rounded"
+          animation="wave"
+          width="50%"
+          //   height={60}
+          style={{ marginBottom: 6 }}
+        />
+      ))}
+    </Box>
+  );
+}
 
 const INITIAL_PAGE_SIZE = 50;
 
@@ -20,9 +50,6 @@ const InventoryItemsPage: React.FC = () => {
     undefined
   );
   const [rows, setRows] = useState<InventoryItem[]>([]);
-  //   const [visitedPages, setVisitedPages] = useState<{ [page: number]: boolean }>(
-  //     {}
-  //   );
   // Initialize preFetchedPages to track pages for which data has been prefetched
   const [preFetchedPages, setPreFetchedPages] = useState<
     Record<string, boolean>
@@ -70,7 +97,7 @@ const InventoryItemsPage: React.FC = () => {
   }, [data, error]);
 
   if (isInitialLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoadingOverlay />;
   }
 
   console.log('preFetchedPages', preFetchedPages);
