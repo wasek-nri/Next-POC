@@ -1,40 +1,51 @@
 'use client';
 
+import { Switch } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import Switch from '@mui/material/Switch';
+import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import React from 'react';
-import { useThemeContext } from "../mui/MuiThemeProvider.client";
+import { useThemeContext } from '../mui/MuiThemeProvider.client';
 
 const Header: React.FC = () => {
   const { toggleTheme } = useThemeContext();
 
+  // Define the style object for the Link components
+  const linkStyle = {
+    textDecoration: 'none',
+    color: '#FFF',
+  };
+
   return (
     <AppBar position="static">
       <Toolbar>
-        {/* Use Typography for menu items and add spacing */}
-        <Link href="/" passHref>
-          <Typography sx={{cursor: 'pointer', marginRight: 2 }}>
+        <MenuItem>
+          <Link href="/" passHref style={linkStyle}>
             Home
-          </Typography>
-        </Link>
-        <Link href="/inventory/items" passHref>
-          <Typography sx={{cursor: 'pointer', marginRight: 2 }}>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="/inventory/items" passHref style={linkStyle}>
             Inventory
-          </Typography>
-        </Link>
-        <Link href="/operations" passHref>
-          <Typography sx={{ cursor: 'pointer' }}>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="/operations" passHref style={linkStyle}>
             Operations
-          </Typography>
-        </Link>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="/inventory-hybrid" passHref style={linkStyle}>
+            Hybrid Inventory
+          </Link>
+        </MenuItem>
+        {/* Additional MenuItems with styled Links can be added here */}
         {/* Theme Toggle Switch, aligned to the right */}
         <Switch
           onChange={toggleTheme}
           edge="end"
-          sx={{ marginLeft: 'auto' }}  // This pushes the switch to the far right
+          sx={{ marginLeft: 'auto' }} // This pushes the switch to the far right
         />
       </Toolbar>
     </AppBar>

@@ -9,32 +9,18 @@ interface FetchInventoryItemsParams {
     sortDirection?: 'ASC' | 'DESC';
   }
 
-// const nriAxios = axios.create({
-//   baseURL: 'https://gateway.test.aspiresuite.com',
-//   headers: {
-//     'Accept': 'application/json, text/plain, */*',
-//     'Accept-Language': 'en-US,en;q=0.9',
-//     'CompanyID': '1',
-//     'Connection': 'keep-alive',
-//     'Cookie': 'ARRAffinity=971882d557971c3372bd742d29c646e02116f2b8d9ba0766dc42b1327123f6f8; ARRAffinitySameSite=971882d557971c3372bd742d29c646e02116f2b8d9ba0766dc42b1327123f6f8; authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk1YjZkZTFhNTk4M2I3MmIxZTdmZjgiLCJpYXQiOjE3MDY4MTEyMDYsImV4cCI6MTcwNjg0NzIwNn0.Qbbx8losjaviLdDkKsdJ40D1jyMjCJkgNUbJGOc1fEQ; ARRAffinity=975e68d7348238685e42012d3f6cbc00234a5b18d5298412155d1333efcc22de; ARRAffinitySameSite=975e68d7348238685e42012d3f6cbc00234a5b18d5298412155d1333efcc22de',
-//     // ... other headers
-//   },
-//   withCredentials: true, // This is required for cross-domain cookies to be sent
-// });
-
-
 const nriAxios = axios.create({
   baseURL: 'http://localhost:3000',
   headers: {
     'Accept': 'application/json, text/plain, */*',
     'Accept-Language': 'en-US,en;q=0.9',
     'CompanyID': '1',
-    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDcxNzg0ODMsImV4cCI6MTcwNzIxNDQ4M30.-ICKz0-dFER3b72_wKu-L-4whaHdQ-CLuqVYpp4w6wQ',
+    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDcxODkwMTUsImV4cCI6MTcwNzIyNTAxNX0.zXfbEv5hTjgWE6tgVjAM8ZVVfMttRzPfWdTo4dptbQ0',
   },
   withCredentials: true, // This is required for cross-domain cookies to be sent
 });
 
-export const fetchInventoryItems = ({ 
+export const fetchInventoryItems =async({ 
     page, 
     pageSize, 
     clientCode, 
@@ -54,7 +40,9 @@ export const fetchInventoryItems = ({
     });
   
     // The actual URL will be: baseURL + '/web/inventory/items?' + queryParams.toString()
-    return nriAxios.get(`/web/inventory/items?${queryParams.toString()}`)
-    .then(response => response.data);
+    // return nriAxios.get(`/web/inventory/items?${queryParams.toString()}`)
+    // .then(response => response.data);
+    const response = await nriAxios.get(`/web/inventory/items?${queryParams.toString()}`);
+    return response.data;
   };
 
