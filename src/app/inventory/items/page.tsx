@@ -8,7 +8,7 @@ import {
 } from './interfaces/inventoryItems';
 import { fetchInventoryItems } from './services/inventoryItems';
 
-const INITIAL_PAGE_SIZE = 5;
+const INITIAL_PAGE_SIZE = 50;
 
 const InventoryItemsPage: React.FC = () => {
   const [paginationModel, setPaginationModel] = useState({
@@ -20,9 +20,13 @@ const InventoryItemsPage: React.FC = () => {
     undefined
   );
   const [rows, setRows] = useState<InventoryItem[]>([]);
-  const [visitedPages, setVisitedPages] = useState<{ [page: number]: boolean }>(
-    {}
-  );
+  //   const [visitedPages, setVisitedPages] = useState<{ [page: number]: boolean }>(
+  //     {}
+  //   );
+  // Initialize preFetchedPages to track pages for which data has been prefetched
+  const [preFetchedPages, setPreFetchedPages] = useState<
+    Record<string, boolean>
+  >({});
 
   const fetchKey = `/inventory/items?page=${paginationModel.page}&pageSize=${paginationModel.pageSize}`;
 
@@ -34,25 +38,26 @@ const InventoryItemsPage: React.FC = () => {
     })
   );
 
-  // Prefetching next page data. Don't prefetch if we've already visited the next page
+  // Prefetching next page data. Don't prefetch if we've already prefetched the next page
   useEffect(() => {
     const nextPage = paginationModel.page + 1;
-    // Prefetch only if we haven't visited the next page
-    if (!visitedPages[nextPage]) {
-      const nextFetchKey = `/inventory/items?page=${nextPage}&pageSize=${paginationModel.pageSize}`;
+    const pageSize = paginationModel.pageSize;
+    const key = `page=${nextPage}&pageSize=${pageSize}`;
+    // Prefetch only if we haven't already prefetched the next page with the same pageSize
+    if (!preFetchedPages[key]) {
+      setPreFetchedPages((prev) => ({ ...prev, [key]: true }));
+
+      const nextFetchKey = `/inventory/items?${key}`;
       mutate(
         nextFetchKey,
         fetchInventoryItems({
           page: nextPage,
-          pageSize: paginationModel.pageSize,
+          pageSize,
           clientCode: '2XU',
         })
-      ).then(() => {
-        // Mark this page as visited
-        setVisitedPages((prev) => ({ ...prev, [nextPage]: true }));
-      });
+      );
     }
-  }, [paginationModel.page, paginationModel.pageSize, visitedPages]);
+  }, [paginationModel, preFetchedPages]);
 
   useEffect(() => {
     if (data) {
@@ -68,7 +73,7 @@ const InventoryItemsPage: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  console.log('visitedPages', visitedPages);
+  console.log('preFetchedPages', preFetchedPages);
 
   const isLoading = !data && !error;
 
