@@ -2,12 +2,22 @@
 import { Box, Skeleton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import useSWR, { mutate } from 'swr';
-import InventoryItemsDG, { columns } from './components/InventoryItemsDG';
+// import InventoryItemsDG, { columns } from './components/InventoryItemsDG';
+import dynamic from 'next/dynamic';
+import { columns } from './components/InventoryItemsDG';
 import {
   InventoryItem,
   InventoryItemsResponse,
 } from './interfaces/inventoryItems';
 import { fetchInventoryItems } from './services/inventoryItems';
+
+// Dynamically import InventoryItemsDG with SSR disabled
+const InventoryItemsDG = dynamic(
+  () => import('./components/InventoryItemsDG'),
+  {
+    ssr: false,
+  }
+);
 
 function CustomLoadingOverlay() {
   return (
