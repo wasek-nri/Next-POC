@@ -1,5 +1,5 @@
 // types.ts
-import { GridColDef, GridRowsProp } from '@mui/x-data-grid-premium';
+import { DataGridPremiumProps, GridColDef, GridRowsProp } from '@mui/x-data-grid-premium';
 
 // Interface for a single inventory item
 export interface InventoryItem {
@@ -95,6 +95,12 @@ export interface InventoryItem {
     PageNumber: number;
     PageSize: number;
   }
+
+ export interface InventoryItemsDGProps extends DataGridPremiumProps<InventoryItem> {
+    rows: InventoryItem[];
+    columns: DataGridPremiumProps<InventoryItem>['columns'];
+  }
+  
 // Define the columns structure using GridColDef
 export type InventoryItemsColumns = GridColDef[];
 
