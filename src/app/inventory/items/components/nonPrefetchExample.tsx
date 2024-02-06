@@ -1,12 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import { columns } from '../containers/InventoryItemsDGContainer';
 import {
   InventoryItem,
   InventoryItemsResponse,
 } from '../interfaces/inventoryItems';
 import { fetchInventoryItems } from '../services/inventoryItems';
-import InventoryItemsDG, { columns } from './InventoryItemsDG';
+import InventoryItemsDG from './InventoryItemsDG';
 
 const INITIAL_PAGE_SIZE = 50;
 

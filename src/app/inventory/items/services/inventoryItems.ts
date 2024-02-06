@@ -29,18 +29,7 @@ const nriAxios = axios.create({
     'Accept': 'application/json, text/plain, */*',
     'Accept-Language': 'en-US,en;q=0.9',
     'CompanyID': '1',
-    'Connection': 'keep-alive',
-    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDY5MDY5OTcsImV4cCI6MTcwNjk0Mjk5N30.enZs3m009AD_IxXCuB5rrjtTzaXc0eMTwEjiOKWXkz8',
-    'Origin': 'http://localhost:3001',
-    'Referer': 'http://localhost:3001/',
-    // Not typically necessary to set these headers manually in a browser environment
-    // 'Sec-Fetch-Dest': 'empty',
-    // 'Sec-Fetch-Mode': 'cors',
-    // 'Sec-Fetch-Site': 'same-site',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
+    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDcxNzg0ODMsImV4cCI6MTcwNzIxNDQ4M30.-ICKz0-dFER3b72_wKu-L-4whaHdQ-CLuqVYpp4w6wQ',
   },
   withCredentials: true, // This is required for cross-domain cookies to be sent
 });
