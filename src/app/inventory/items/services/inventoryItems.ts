@@ -15,7 +15,7 @@ const nriAxios = axios.create({
     'Accept': 'application/json, text/plain, */*',
     'Accept-Language': 'en-US,en;q=0.9',
     'CompanyID': '1',
-    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDcxODkwMTUsImV4cCI6MTcwNzIyNTAxNX0.zXfbEv5hTjgWE6tgVjAM8ZVVfMttRzPfWdTo4dptbQ0',
+    'Cookie': 'authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4OTkwYmE2YzYxMTZhMGE4MmQ2NzAiLCJpYXQiOjE3MDcyNTI5MTUsImV4cCI6MTcwNzI4ODkxNX0.w7tIeuOdJcfD8cySwmmcBsGnq1cH_ncGGHZ4thDHkxA',
   },
   withCredentials: true, // This is required for cross-domain cookies to be sent
 });

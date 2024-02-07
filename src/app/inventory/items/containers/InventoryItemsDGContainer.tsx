@@ -9,15 +9,16 @@ import {
   InventoryItemsResponse,
 } from '../interfaces/inventoryItems';
 import { fetchInventoryItems } from '../services/inventoryItems';
+import InventoryItemsDG from '../components/InventoryItemsDG';
 
 // Dynamically import InventoryItemsDG with SSR disabled
-const InventoryItemsDG = dynamic(
-  () => import('../components/InventoryItemsDG'),
-  {
-    ssr: false,
-    loading: () => <LoadingLines />,
-  }
-);
+// const InventoryItemsDG = dynamic(
+//   () => import('../components/InventoryItemsDG'),
+//   {
+//     ssr: false,
+//     loading: () => <LoadingLines />,
+//   }
+// );
 
 // Define columns for the DataGrid
 export const columns: InventoryItemsDGProps['columns'] = [
@@ -106,7 +107,7 @@ const InventoryItemsPage: React.FC = () => {
   //   }, [paginationModel, preFetchedPages]);
 
   useEffect(() => {
-    if (!data) return; // Ensure current page data is loaded before prefetching next page
+    // if (!data) return; // Ensure current page data is loaded before prefetching next page
 
     const nextPage = paginationModel.page + 1;
     const pageSize = paginationModel.pageSize;
