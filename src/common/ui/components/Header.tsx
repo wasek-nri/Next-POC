@@ -27,17 +27,22 @@ const Header: React.FC = () => {
         </MenuItem>
         <MenuItem>
           <Link href="/inventory/items" passHref style={linkStyle}>
-            Inventory
+            CSR Inventory
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link href="/operations" passHref style={linkStyle}>
-            Operations
+          <Link href="/inventory-ssr" passHref style={linkStyle}>
+            SSR Inventory
           </Link>
         </MenuItem>
         <MenuItem>
           <Link href="/inventory-hybrid" passHref style={linkStyle}>
             Hybrid Inventory
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="/operations" passHref style={linkStyle}>
+            Operations
           </Link>
         </MenuItem>
         {/* Additional MenuItems with styled Links can be added here */}
